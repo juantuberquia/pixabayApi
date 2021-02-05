@@ -1,12 +1,22 @@
 import React from "react";
+import Image from "./Image";
 
 const ShowData = ({ dataPhotos }) => {
-  // console.log(dataPhotos[0].tags);
+  if (Object.keys(dataPhotos).length === 0) return null;
 
-  console.log(dataPhotos);
-  console.log(dataPhotos[0].id);
-
-  return <div>{dataPhotos.id}</div>;
+  return (
+    <div className="col-12 p-5 row">
+      {dataPhotos.map((photo) => (
+        <Image
+          key={photo.id}
+          url={photo.largeImageURL}
+          tags={photo.tags}
+          preview={photo.previewURL}
+          likes={photo.likes}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default ShowData;

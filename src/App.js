@@ -33,6 +33,8 @@ function App() {
       <div className="jumbotron">
         <p className="lead text-center"> Buscador de imagenes </p>
         <Form setSearch={setSearch} setGetdata={setGetdata} />
+      </div>
+      <div className="row justify-content-center">
         <ShowData dataPhotos={dataPhotos} />
       </div>
     </div>
