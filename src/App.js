@@ -8,6 +8,10 @@ function App() {
   // save info of getdata
   const [dataPhotos, setDataPhotos] = useState([]);
 
+  // state pages
+  const [pageCurretly, setPageCurretly] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   // consulta la api
   useEffect(() => {
     if (getdata === true) {
@@ -15,18 +19,27 @@ function App() {
         const imgsForPage = 30;
         const key = "14166181-a93322c4f13390a817f56b032";
         const response = await fetch(
-          `https://pixabay.com/api/?key=${key}&q=${search}&per_page=${imgsForPage}`
+          `https://pixabay.com/api/?key=${key}&q=${search}&per_page=${imgsForPage}&page=${pageCurretly}`
         );
         let res = await response.json();
-
+        console.log(res);
         setDataPhotos(res.hits);
+        setTotalPages(Math.ceil(res.totalHits / imgsForPage));
       };
 
       dataApi();
     }
+  }, [getdata, search, setDataPhotos, pageCurretly]);
 
-    setGetdata(false);
-  }, [getdata, search, setDataPhotos]);
+  const increasePage = () => {
+    setPageCurretly(pageCurretly + 1);
+    setGetdata(true);
+  };
+
+  const decreasePage = () => {
+    setPageCurretly(pageCurretly - 1);
+    setGetdata(true);
+  };
 
   return (
     <div className="container">
@@ -37,6 +50,12 @@ function App() {
       <div className="row justify-content-center">
         <ShowData dataPhotos={dataPhotos} />
       </div>
+      {pageCurretly === 1 ? null : (
+        <button onClick={decreasePage}> &laquo; Anterior </button>
+      )}
+      {pageCurretly >= totalPages ? null : (
+        <button onClick={increasePage}> Siguiente &raquo; </button>
+      )}
     </div>
   );
 }
