@@ -12,7 +12,7 @@ function App() {
   const [pageCurretly, setPageCurretly] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // consulta la api
+  // consulting  api
   useEffect(() => {
     if (getdata === true) {
       const dataApi = async () => {
@@ -49,13 +49,19 @@ function App() {
       </div>
       <div className="row justify-content-center">
         <ShowData dataPhotos={dataPhotos} />
+        <div className="mb-4">
+          {pageCurretly === 1 ? null : (
+            <button onClick={decreasePage} class="bbtn btn-dark btn-lg mr-3">
+              &laquo; Anterior
+            </button>
+          )}
+          {pageCurretly >= totalPages ? null : (
+            <button onClick={increasePage} class="bbtn btn-dark btn-lg ">
+              Siguiente &raquo;
+            </button>
+          )}
+        </div>
       </div>
-      {pageCurretly === 1 ? null : (
-        <button onClick={decreasePage}> &laquo; Anterior </button>
-      )}
-      {pageCurretly >= totalPages ? null : (
-        <button onClick={increasePage}> Siguiente &raquo; </button>
-      )}
     </div>
   );
 }
